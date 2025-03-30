@@ -9,6 +9,7 @@ import com.phasmidsoftware.dsaipg.util.config.Config;
 import java.util.Arrays;
 
 import static com.phasmidsoftware.dsaipg.util.config.Config_Benchmark.*;
+import static com.phasmidsoftware.dsaipg.util.config.Config_Benchmark.CUTOFF_DEFAULT;
 
 /**
  * A generic implementation of the MergeSort algorithm for sorting elements of type X,
@@ -143,9 +144,21 @@ public class MergeSort<X extends Comparable<X>> extends SortWithComparableHelper
             insertionSort.sort(a, from, to);
             return;
         }
-
-        // TO BE IMPLEMENTED  : implement merge sort with insurance and no-copy optimizations
-throw new RuntimeException("implementation missing");
+        int mid = (from +to)/ 2;
+        if(!noCopy){
+            sort(a,aux,from,mid);
+            sort(a,aux,mid,to);
+            if(insurance)
+                if(a[mid-1].compareTo(a[mid]) < 0) return;
+            merge(a, aux, from, mid, to);
+            helper.copyBlock(aux,from,a,from,to-from);
+        }else{
+            sort(aux,a,from,mid);
+            sort(aux,a,mid,to);
+            if(insurance)
+                if(a[mid-1].compareTo(a[mid]) < 0) return;
+            merge(aux,a,from,mid,to);
+        }
     }
 
     /**
@@ -206,9 +219,9 @@ throw new RuntimeException("implementation missing");
         }
         return stringBuilder.toString();
     }
-
     private final InsertionSort<X> insertionSort;
     private int arrayMemory = -1;
     private int additionalMemory;
+
     private int maxMemory;
 }

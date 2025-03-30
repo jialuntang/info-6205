@@ -34,12 +34,6 @@ public class SorterBenchmark<T extends Comparable<T>> extends Benchmark_Timer<T[
             logger.warn("run: skipping " + this);
     }
 
-    /**
-     * Returns a string representation of the SorterBenchmark object, including the class type,
-     * total number of elements, and number of runs.
-     *
-     * @return a string containing the description of the SorterBenchmark instance.
-     */
     @Override
     public String toString() {
         return "SorterBenchmark on " + tClass + " from " + formatWhole(ts.length) + " total elements and " + formatWhole(nRuns) + " runs";
@@ -111,5 +105,4 @@ public class SorterBenchmark<T extends Comparable<T>> extends Benchmark_Timer<T[
     protected final TimeLogger[] timeLoggers;
     private final static LazyLogger logger = new LazyLogger(SorterBenchmark.class);
     private final Class<T> tClass;
-
 }
